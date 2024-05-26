@@ -6,10 +6,10 @@ import com.facebook.react.ReactNativeHost
 import com.facebook.react.ReactPackage
 import com.facebook.react.shell.MainReactPackage
 import com.facebook.soloader.SoLoader
-import java.util.Arrays
+import java.util.*
 
 class MainApplication : Application(), ReactApplication {
-
+    // Implement the required ReactNativeHost as an abstract member.
     private val mReactNativeHost = object : ReactNativeHost(this) {
         override fun getUseDeveloperSupport(): Boolean {
             return BuildConfig.DEBUG
@@ -18,15 +18,16 @@ class MainApplication : Application(), ReactApplication {
         override fun getPackages(): List<ReactPackage> {
             return listOf(
                 MainReactPackage(),
-                FloatingBubblePackage() // Ensure this is the only place it's added
+                FloatingBubblePackage() // Assuming this is your custom package
             )
         }
 
         override fun getJSMainModuleName(): String {
-            return "index"
+            return "index" // Ensure this matches the entry file name for your React Native JS code
         }
     }
 
+    // Properly override the getter for ReactNativeHost as required by ReactApplication
     override fun getReactNativeHost(): ReactNativeHost {
         return mReactNativeHost
     }
