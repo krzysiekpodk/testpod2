@@ -1,0 +1,11 @@
+R_DEF: Internal format may change without notice
+local
+drawable ic_bubble
+drawable rn_edit_text_material
+id bubble_image
+integer react_native_dev_server_port
+layout floating_bubble
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+style AppTheme
