@@ -1,22 +1,39 @@
 package com.floatingbubbleapp
 
+import android.content.Intent
+import android.os.Bundle
 import com.facebook.react.ReactActivity
-import com.facebook.react.ReactActivityDelegate
-import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
-import com.facebook.react.defaults.DefaultReactActivityDelegate
+import com.facebook.react.ReactInstanceManager
+import com.facebook.react.bridge.ReactContext
+import com.facebook.react.modules.core.DeviceEventManagerModule
 
 class MainActivity : ReactActivity() {
 
-  /**
-   * Returns the name of the main component registered from JavaScript. This is used to schedule
-   * rendering of the component.
-   */
-  override fun getMainComponentName(): String = "FloatingBubbleApp"
+    override fun getMainComponentName(): String {
+        return "FloatingBubbleApp"
+    }
 
-  /**
-   * Returns the instance of the [ReactActivityDelegate]. We use [DefaultReactActivityDelegate]
-   * which allows you to enable New Architecture with a single boolean flags [fabricEnabled]
-   */
-  override fun createReactActivityDelegate(): ReactActivityDelegate =
-      DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Check if this intent is started via custom flag from service with screen info
+        val intent = intent
+        if (intent != null && intent.hasExtra("screen")) {
+            val screen = intent.getStringExtra("screen")
+            val reactInstanceManager: ReactInstanceManager = reactNativeHost.reactInstanceManager
+            val reactContext: ReactContext? = reactInstanceManager.currentReactContext
+
+            // When the react context is initialized, send an event to JavaScript
+            if (reactContext != null) {
+                reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
+                    .emit("navigateToScreen", screen)
+            } else {
+                // Otherwise wait for it to initialize
+                reactInstanceManager.addReactInstanceEventListener { context ->
+                    context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
+                        .emit("navigateToScreen", screen)
+                }
+            }
+        }
+    }
 }

@@ -1,3 +1,0 @@
-/workspace/testpod2/FloatingBubbleApp/android/app/src/main/java/com/floatingbubbleapp/MainApplication.kt
-/workspace/testpod2/FloatingBubbleApp/android/app/src/main/java/com/floatingbubbleapp/MainActivity.kt
-/workspace/testpod2/FloatingBubbleApp/android/app/src/main/java/com/floatingbubbleapp/FloatingBubblePackage.kt
