@@ -1,19 +1,38 @@
 package com.floatingbubbleapp
 
+import android.app.Application
+import com.facebook.react.ReactApplication
+import com.facebook.react.ReactNativeHost
 import com.facebook.react.ReactPackage
-import com.facebook.react.bridge.NativeModule
-import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.uimanager.ViewManager
+import com.facebook.react.shell.MainReactPackage
+import com.facebook.soloader.SoLoader
+import java.util.Arrays
 
-class FloatingBubblePackage : ReactPackage {
-          override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
-                    return emptyList()
-          }
+class MainApplication : Application(), ReactApplication {
 
-              override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
-                          return listOf(FloatingBubbleModule(reactContext))
-              }
+    private val mReactNativeHost = object : ReactNativeHost(this) {
+        override fun getUseDeveloperSupport(): Boolean {
+            return BuildConfig.DEBUG
+        }
+
+        override fun getPackages(): List<ReactPackage> {
+            return listOf(
+                MainReactPackage(),
+                FloatingBubblePackage() // Ensure this is the only place it's added
+            )
+        }
+
+        override fun getJSMainModuleName(): String {
+            return "index"
+        }
+    }
+
+    override fun getReactNativeHost(): ReactNativeHost {
+        return mReactNativeHost
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        SoLoader.init(this, /* native exopackage */ false)
+    }
 }
-
-              
-          
