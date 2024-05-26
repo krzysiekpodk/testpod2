@@ -28,6 +28,7 @@ RUN  wget https://dl.google.com/android/repository/commandlinetools-linux-758392
     && mv $ANDROID_HOME/cmdline-tools/lib $ANDROID_HOME/cmdline-tools/latest
 
 RUN echo "export ANDROID_HOME=$ANDROID_HOME" >> /home/gitpod/.bashrc \
+    && echo "export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> /home/gitpod/.bashrc \
     && echo 'export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/cmdline-tools/bin:$ANDROID_HOME/platform-tools:$PATH' >> /home/gitpod/.bashrc
 
 # Install Android Image version 30
